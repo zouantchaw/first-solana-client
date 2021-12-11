@@ -6,6 +6,22 @@ import './App.css';
 const TWITTER_HANDLE = 'love_thegame_';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
+const TEST_GIFS = [
+  'https://i.pinimg.com/originals/45/2c/58/452c58e20c10bfba89c7ea1346efafae.gif',
+  'https://c.tenor.com/qqTxbzmwQwYAAAAC/exagerado-futbol.gif',
+  'https://pa1.narvii.com/6171/1df2804b7924a2db19d4b9b14172177dc52621b9_hq.gif',
+  'https://c.tenor.com/aUvtCuFuHjUAAAAd/eden-hazard-soccer.gif',
+  'https://media0.giphy.com/media/LjsI6VUVlpmnK/giphy.gif',
+  'https://i.pinimg.com/originals/16/59/b4/1659b45314d89677924d3ecf1097ce69.gif',
+  'https://c.tenor.com/GGt5qgAnCkMAAAAC/cristiano-ronaldo.gif',
+  'https://cdn.bleacherreport.net/temp_images/2014/01/16/Messi2.gif',
+  'https://media4.giphy.com/media/3oEjI0yKL89NaKGgvK/giphy.gif',
+  'https://c.tenor.com/idNy68AnC5UAAAAC/ronaldo-ronaldo-united.gif',
+  'https://c.tenor.com/GE_kUeQVS8AAAAAC/fabregas-iniesta.gif',
+  'https://i.gifer.com/NVPz.gif',
+  'https://i.makeagif.com/media/11-27-2015/_5CiXX.gif'
+]
+
 const App = () => {
 
   // State 
@@ -39,7 +55,15 @@ const App = () => {
     }
   }
 
-  const connectWallet = async () => {};
+  const connectWallet = async () => {
+    const { solana } = window;
+
+    if (solana) {
+      const response = await solana.connect();
+      console.log('Connected with Public Key: ', response.publicKey.toString());
+      setWalletAddress(response.publicKey.toString());
+    }
+  };
 
   // Render 'Connect to Wallet' button if user isn't connected
   const renderNotConnectedContainer = () => (
@@ -49,6 +73,19 @@ const App = () => {
     >
     Connect to Wallet
     </button>
+  );
+
+  // Contaner that maps throught all gif links and renders them
+  const renderConnectedContainer = () => (
+    <div className="connected-container">
+      <div className="gif-grid">
+        {TEST_GIFS.map(gif => (
+          <div className="gif-item" key={gif}>
+            <img src={gif} alt={gif} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 
   // On mount, invoke checkIfWalletIsConnected
@@ -64,12 +101,13 @@ const App = () => {
     <div className="App">
       <div className={walletAddress ? 'authed-container' : 'container'}>
         <div className="header-container">
-          <p className="header">🖼 GIF Portal</p>
+          <p className="header">⚽️ Fútbol Gifs</p>
           <p className="sub-text">
-            View your GIF collection in the metaverse ✨
+            View and post your favorite fútbol gifs ✨
           </p>
           {/* Render connect to wallet button if walletAddress is falsy */}
           {!walletAddress && renderNotConnectedContainer()}
+          {walletAddress && renderConnectedContainer()}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
