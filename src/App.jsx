@@ -10,20 +10,39 @@ const App = () => {
 
   // Check if wallet is connected
   const checkIfWalletIsConnected = async () => {
-    try{
+    try {
       const { solana } = window;
 
       if (solana) {
-        if(solana.isPhantom) {
+        if (solana.isPhantom) {
           console.log('Phantom wallet found!');
+
+          // Invoke 'connect' method on solana object to connect to users wallet
+          const response = solana.connect({ onlyIfTrusted: true })
+          console.log(
+            'Connected with Public Key:',
+            response.publicKey.toString()
+          );
         }
       } else {
         alert('Solana object not found! Get a Phantom Wallet 👻');
       }
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }
+
+  const connectWallet = async () => {};
+
+  // Render 'Connect to Wallet' button if user isn't connected
+  const renderNotConnectedContainer = () => (
+    <button
+      className="cta-button connect-wallet-button"
+      onClick={connectWallet}
+    >
+    Connect to Wallet
+    </button>
+  );
 
   // On mount, invoke checkIfWalletIsConnected
   useEffect(() => {
@@ -42,6 +61,8 @@ const App = () => {
           <p className="sub-text">
             View your GIF collection in the metaverse ✨
           </p>
+          {/* Render connect to wallet button */}
+          {renderNotConnectedContainer()}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
