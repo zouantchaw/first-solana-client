@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import twitterLogo from './assets/twitter-logo.svg';
 import './App.css';
 
@@ -24,6 +24,15 @@ const App = () => {
       console.log(error)
     }
   }
+
+  // On mount, invoke checkIfWalletIsConnected
+  useEffect(() => {
+    const onLoad = async () => {
+      await checkIfWalletIsConnected();
+    };
+    window.addEventListener('load', onLoad);
+    return () => window.removeEventListener('load', onLoad);
+  }, []);
 
   return (
     <div className="App">
