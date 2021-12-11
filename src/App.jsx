@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import twitterLogo from './assets/twitter-logo.svg';
 import './App.css';
 
@@ -7,6 +7,9 @@ const TWITTER_HANDLE = 'love_thegame_';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const App = () => {
+
+  // State 
+  const [walletAddress, setWalletAddress] = useState(null);
 
   // Check if wallet is connected
   const checkIfWalletIsConnected = async () => {
@@ -24,6 +27,10 @@ const App = () => {
             response.publicKey.toString()
           );
         }
+
+        // Set users publicKey in state
+        setWalletAddress(response.publicKey.toString());
+
       } else {
         alert('Solana object not found! Get a Phantom Wallet 👻');
       }
@@ -55,14 +62,14 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className="container">
+      <div className={walletAddress ? 'authed-container' : 'container'}>
         <div className="header-container">
           <p className="header">🖼 GIF Portal</p>
           <p className="sub-text">
             View your GIF collection in the metaverse ✨
           </p>
-          {/* Render connect to wallet button */}
-          {renderNotConnectedContainer()}
+          {/* Render connect to wallet button if walletAddress is falsy */}
+          {!walletAddress && renderNotConnectedContainer()}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
