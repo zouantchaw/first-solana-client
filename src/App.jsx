@@ -7,6 +7,24 @@ const TWITTER_HANDLE = 'love_thegame_';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const App = () => {
+
+  // Check if wallet is connected
+  const checkIfWalletIsConnected = async () => {
+    try{
+      const { solana } = window;
+
+      if (solana) {
+        if(solana.isPhantom) {
+          console.log('Phantom wallet found!');
+        }
+      } else {
+        alert('Solana object not found! Get a Phantom Wallet 👻');
+      }
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="App">
       <div className="container">
