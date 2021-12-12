@@ -67,10 +67,18 @@ const App = () => {
     }
   };
 
+  const sendGif = async () => {
+    if (inputValue.length > 0) {
+      console.log('Gif link:', inputValue);
+    } else {
+      console.log('Empty input. Try again')
+    }
+  }
+
   const onInputChange = (event) => {
     const { value } = event.target;
     setInputValue(value)
-  }
+  };
 
   // Render 'Connect to Wallet' button if user isn't connected
   const renderNotConnectedContainer = () => (
@@ -89,6 +97,8 @@ const App = () => {
     <form
       onSubmit={(event) => {
         event.preventDefault();
+        sendGif();
+        setInputValue('')
       }}
     >
       <input type="text" placeholder="Enter gif link!" value={inputValue} onChange={onInputChange} />
