@@ -72,6 +72,8 @@ const App = () => {
   const sendGif = async () => {
     if (inputValue.length > 0) {
       console.log('Gif link:', inputValue);
+      setGifList([...gifList, inputValue]);
+      setInputValue('');
     } else {
       console.log('Empty input. Try again')
     }
@@ -100,7 +102,6 @@ const App = () => {
       onSubmit={(event) => {
         event.preventDefault();
         sendGif();
-        setInputValue('')
       }}
     >
       <input type="text" placeholder="Enter gif link!" value={inputValue} onChange={onInputChange} />
