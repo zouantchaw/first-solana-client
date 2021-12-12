@@ -71,13 +71,22 @@ const App = () => {
       className="cta-button connect-wallet-button"
       onClick={connectWallet}
     >
-    Connect to Wallet
+      Connect to Wallet
     </button>
   );
 
   // Contaner that maps throught all gif links and renders them
   const renderConnectedContainer = () => (
     <div className="connected-container">
+    {/* Form for gif upload */}
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+      }}
+    >
+      <input type="text" placeholder="Enter gif link!" />
+      <button type="submit" className="cta-button submit-gif-button">Submit</button>
+    </form>
       <div className="gif-grid">
         {TEST_GIFS.map(gif => (
           <div className="gif-item" key={gif}>
