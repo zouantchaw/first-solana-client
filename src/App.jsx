@@ -27,6 +27,8 @@ const App = () => {
   // State 
   const [walletAddress, setWalletAddress] = useState(null);
 
+  const [inputValue, setInputValue] = useState('');
+
   // Check if wallet is connected
   const checkIfWalletIsConnected = async () => {
     try {
@@ -65,6 +67,11 @@ const App = () => {
     }
   };
 
+  const onInputChange = (event) => {
+    const { value } = event.target;
+    setInputValue(value)
+  }
+
   // Render 'Connect to Wallet' button if user isn't connected
   const renderNotConnectedContainer = () => (
     <button
@@ -84,7 +91,7 @@ const App = () => {
         event.preventDefault();
       }}
     >
-      <input type="text" placeholder="Enter gif link!" />
+      <input type="text" placeholder="Enter gif link!" value={inputValue} onChange={onInputChange} />
       <button type="submit" className="cta-button submit-gif-button">Submit</button>
     </form>
       <div className="gif-grid">
